@@ -4,8 +4,22 @@
  * an empty array. If there is one element, the resulting list should
  * the number twice.
  */
+//use filter
+//[1, 2, 3] -> [1, 3]
+//[1]-> [1, 1]
+//[]->[]
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    //first check the length
+    if (numbers.length === 0) {
+        return [];
+    }
+    if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    }
+    return numbers.filter(
+        (_, index, array) => index === 0 || index === array.length - 1,
+    );
+    //return numbers;
 }
 
 /**
@@ -13,7 +27,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    return numbers.map((num: number): number => num * 3);
+    //return numbers;
 }
 
 /**
@@ -21,7 +36,14 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    return numbers.map((str) => {
+        const parsedNum = parseInt(str, 10);
+        if (isNaN(parsedNum)) {
+            return 0;
+        } else {
+            return parsedNum;
+        }
+    });
 }
 
 /**
@@ -32,7 +54,15 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    return amounts.map((str) => {
+        const noDollar = str.startsWith("$") ? str.slice(1) : str;
+        const parsedNum = parseInt(noDollar, 10);
+        if (isNaN(parsedNum)) {
+            return 0;
+        } else {
+            return parsedNum;
+        }
+    });
 };
 
 /**
@@ -41,15 +71,25 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const noQuestionMark = messages.filter((str) => !str.endsWith("?"));
+    const uppercase = noQuestionMark.map((str) =>
+        str.endsWith("!") ? str.toUpperCase() : str,
+    );
+    return uppercase;
 };
 
 /**
  * Consumes an array of words and returns the number of words that are LESS THAN
  * 4 letters long.
  */
+//1. count how many characters are in each string
+//2. use an accumulator(reduce) or .every to keep track of the numbers that are less than 4
 export function countShortWords(words: string[]): number {
-    return 0;
+    const characterNum = words.map((str) => str.length);
+    const numbersLess4 = characterNum.reduce((currentTotal, num) => {
+        return num < 4 ? currentTotal + 1 : currentTotal;
+    }, 0);
+    return numbersLess4;
 }
 
 /**
@@ -58,7 +98,9 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const RGB = (color: string): boolean =>
+        color === "red" || color === "blue" || color === "green";
+    return colors.every(RGB);
 }
 
 /**
@@ -69,7 +111,15 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    }
+    const stringMath = addends.reduce(
+        (totalSum, current) => totalSum + current,
+        0,
+    );
+    const num = addends.join(`+`);
+    return `${stringMath}=${num}`;
 }
 
 /**
@@ -82,5 +132,19 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const firstNegIndex = values.findIndex((num) => num < 0);
+    if (firstNegIndex === -1) {
+        const sum = values.reduce((totalSum, current) => totalSum + current, 0);
+        return [...values, sum];
+    }
+    //sum before neg num
+    const sumBeforeNeg = values.reduce((totalSum, current, index) => {
+        if (index < firstNegIndex) {
+            return totalSum + current;
+        }
+        return totalSum;
+    }, 0);
+    const result = [...values];
+    result.splice(firstNegIndex + 1, 0, sumBeforeNeg);
+    return result;
 }
