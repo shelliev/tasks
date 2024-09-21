@@ -47,7 +47,6 @@ export function isValid(question: Question, answer: string): boolean {
     } else {
         return question.options.includes(answer);
     }
-    // return false;
 }
 
 /**
@@ -78,7 +77,6 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    //multiple question
     const line1and2 = `# ${question.name}\n${question.body}`;
     const options =
         question.type === "multiple_choice_question" ?
