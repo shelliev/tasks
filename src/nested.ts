@@ -176,7 +176,7 @@ export function addNewQuestion(
     type: QuestionType,
 ): Question[] {
     const blankQuestion = makeBlankQuestion(id, name, type);
-    //I had to manually import the function from objects.ts
+    //I had to manually import the function makeBlankQuestion from objects.ts
     const copyArray = questions.map((question: Question): Question => {
         return {
             ...question,
@@ -197,7 +197,15 @@ export function renameQuestionById(
     targetId: number,
     newName: string,
 ): Question[] {
-    return [];
+    return questions.map((question: Question): Question => {
+        if (question.id === targetId) {
+            return {
+                ...question,
+                name: newName,
+            };
+        }
+        return question;
+    });
 }
 
 /***
