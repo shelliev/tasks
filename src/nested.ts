@@ -1,6 +1,8 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion } from "./objects";
+
 /**
  * Consumes an array of questions and returns a new array with only the questions
  * that are `published`.
@@ -220,7 +222,19 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType,
 ): Question[] {
-    return [];
+    return questions.map((question: Question): Question => {
+        if (targetId === question.id) {
+            const updatedType: Question = {
+                ...question,
+                type: newQuestionType,
+            };
+            if (newQuestionType !== "multiple_choice_question") {
+                updatedType.options = [];
+            }
+            return updatedType;
+        }
+        return question;
+    });
 }
 
 /**
@@ -239,7 +253,21 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string,
 ): Question[] {
-    return [];
+    return questions.map((question: Question) => {
+        if (targetId === question.id) {
+            const updatedOption = [...question.options];
+            if (targetOptionIndex === -1) {
+                updatedOption.push(newOption);
+            } else {
+                updatedOption.splice(targetOptionIndex, 1, newOption);
+            }
+            return {
+                ...question,
+                options: updatedOption,
+            };
+        }
+        return question;
+    });
 }
 
 /***
@@ -253,5 +281,12 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number,
 ): Question[] {
-    return [];
+    return questions.reduce((accumulator: Question[], question: Question) => {
+        accumulator.push(question);
+        if (question.id === targetId) {
+            const duplicateQst = duplicateQuestion(newId, question);
+            accumulator.push(duplicateQst);
+        }
+        return accumulator;
+    }, []);
 }
