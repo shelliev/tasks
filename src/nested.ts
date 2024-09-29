@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-
+import { makeBlankQuestion } from "./objects";
 /**
  * Consumes an array of questions and returns a new array with only the questions
  * that are `published`.
@@ -135,15 +135,33 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    return [];
+    return questions.map((question: Question): Question => {
+        return {
+            ...question,
+            options: [...question.options],
+            published: true,
+        };
+    });
 }
 
 /***
  * Consumes an array of Questions and produces whether or not all the questions
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
+//return true if all types are "short_answer_question" or "multiple_choice_question"
 export function sameType(questions: Question[]): boolean {
-    return false;
+    const shortAnswerType = questions.filter(
+        (question: Question): boolean =>
+            question.type === "short_answer_question",
+    ).length;
+    const multipleChoiceType = questions.filter(
+        (question: Question): boolean =>
+            question.type === "multiple_choice_question",
+    ).length;
+    return (
+        questions.length === shortAnswerType ||
+        questions.length === multipleChoiceType
+    );
 }
 
 /***
@@ -157,7 +175,16 @@ export function addNewQuestion(
     name: string,
     type: QuestionType,
 ): Question[] {
-    return [];
+    const blankQuestion = makeBlankQuestion(id, name, type);
+    //I had to manually import the function from objects.ts
+    const copyArray = questions.map((question: Question): Question => {
+        return {
+            ...question,
+            options: [...question.options],
+        };
+    });
+    copyArray.push(blankQuestion);
+    return copyArray;
 }
 
 /***
