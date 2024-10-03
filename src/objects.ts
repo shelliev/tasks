@@ -8,6 +8,7 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
+<<<<<<< HEAD
     type: QuestionType,
 ): Question {
     return {
@@ -20,6 +21,11 @@ export function makeBlankQuestion(
         points: 1,
         published: false,
     };
+=======
+    type: QuestionType
+): Question {
+    return {};
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -30,9 +36,13 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
+<<<<<<< HEAD
     const givenAnswer = answer.trim().toLowerCase();
     const expected = question.expected.trim().toLowerCase();
     return givenAnswer === expected;
+=======
+    return false;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -42,11 +52,15 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
+<<<<<<< HEAD
     if (question.type === "short_answer_question") {
         return true;
     } else {
         return question.options.includes(answer);
     }
+=======
+    return false;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -56,7 +70,11 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
+<<<<<<< HEAD
     return `${question.id}: ${question.name.substring(0, 10)}`;
+=======
+    return "";
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -77,6 +95,7 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
+<<<<<<< HEAD
     const line1and2 = `# ${question.name}\n${question.body}`;
     const options =
         question.type === "multiple_choice_question" ?
@@ -84,6 +103,9 @@ export function toMarkdown(question: Question): string {
         :   "";
 
     return options ? `${line1and2}\n${options}` : line1and2;
+=======
+    return "";
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -91,7 +113,11 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
+<<<<<<< HEAD
     return { ...question, name: newName };
+=======
+    return question;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -100,7 +126,11 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
+<<<<<<< HEAD
     return { ...question, published: !question.published };
+=======
+    return question;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -110,6 +140,7 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
+<<<<<<< HEAD
     return {
         id,
         name: `Copy of ${oldQuestion.name}`,
@@ -120,6 +151,9 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
         points: oldQuestion.points,
         published: false,
     };
+=======
+    return oldQuestion;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -130,6 +164,7 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
+<<<<<<< HEAD
     return {
         id: question.id,
         name: question.name,
@@ -140,6 +175,9 @@ export function addOption(question: Question, newOption: string): Question {
         points: question.points,
         published: question.published,
     };
+=======
+    return question;
+>>>>>>> upstream/task-state
 }
 
 /**
@@ -154,6 +192,7 @@ export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
+<<<<<<< HEAD
     { points }: { points: number },
 ): Question {
     return {
@@ -166,4 +205,9 @@ export function mergeQuestion(
         points: points,
         published: false,
     };
+=======
+    { points }: { points: number }
+): Question {
+    return contentQuestion;
+>>>>>>> upstream/task-state
 }
