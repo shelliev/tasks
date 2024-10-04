@@ -281,12 +281,15 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number,
 ): Question[] {
-    return questions.reduce((accumulator: Question[], question: Question) => {
-        accumulator.push(question);
-        if (question.id === targetId) {
-            const duplicateQst = duplicateQuestion(newId, question);
-            accumulator.push(duplicateQst);
-        }
-        return accumulator;
-    }, []);
+    return questions.reduce(
+        (accumulator: Question[], question: Question): Question[] => {
+            accumulator.push({ ...question });
+            if (question.id === targetId) {
+                const duplicateQst = duplicateQuestion(newId, question);
+                accumulator.push(duplicateQst);
+            }
+            return accumulator;
+        },
+        [],
+    );
 }
