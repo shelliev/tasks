@@ -21,8 +21,8 @@ function App(): React.JSX.Element {
             <hr />
             <StartAttempt></StartAttempt>
             <hr />
-            {/* <TwoDice></TwoDice>
-            <hr />  */}
+            <TwoDice></TwoDice>
+            <hr />
             <ChangeType></ChangeType>
             <hr />
             {/* <CycleHoliday></CycleHoliday> */}
