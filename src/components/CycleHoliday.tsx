@@ -9,7 +9,7 @@ export function CycleHoliday(): React.JSX.Element {
         | "Thanksgiving 🦃"
         | "Independence Day 🎇";
 
-    const [holiday, setHoliday] = useState<Holiday>(Holiday[0]);
+    const [holiday, setHoliday] = useState<Holiday>("New Year's Day 🎆");
 
     const ALPHABET_TRANSITIONS: Record<Holiday, Holiday> = {
         "Christmas 🎄": "Halloween 🎃",
@@ -38,16 +38,9 @@ export function CycleHoliday(): React.JSX.Element {
     //1 button cycle through holidays by time of year
     return (
         <div>
-            <div>
-                <Button onClick={changeHolidayTime}>Advance by Time</Button>
-                <Button onClick={changeHolidayAlphabet}>
-                    Advance by Alphabet
-                </Button>
-            </div>
-            <div>
-                <div>Holiday: </div>
-                {holiday}
-            </div>
+            <Button onClick={changeHolidayTime}>Advance by Year</Button>
+            <Button onClick={changeHolidayAlphabet}>Advance by Alphabet</Button>
+            <div>Holiday: {holiday}</div>
         </div>
     );
 }
