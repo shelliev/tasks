@@ -11,6 +11,7 @@ import { ColoredBox } from "./bad-components/ColoredBox";
 //import { ShoveBox } from "./bad-components/ShoveBox";
 import { ChooseTeam } from "./bad-components/ChooseTeam";
 import { Button } from "react-bootstrap";
+import Cupcake from "./cupcakeIMG.jpg";
 
 function App(): React.JSX.Element {
     3;
@@ -55,6 +56,11 @@ function App(): React.JSX.Element {
                 <li>Second item</li>
                 <li>Third item</li>
             </ul>
+            <img
+                style={{ width: "20%" }}
+                src={Cupcake}
+                alt="A picture of a cupcake"
+            />
         </div>
     );
 }
