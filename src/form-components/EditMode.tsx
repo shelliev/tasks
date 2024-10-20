@@ -1,42 +1,56 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { Button } from "react-bootstrap";
+//import { Button } from "react-bootstrap";
 
 export function EditMode(): React.JSX.Element {
-    const [leftAttempts, setLeftAttempts] = useState<number>(3);
-    const [requestedAttempts, setRequestedAttempts] = useState<string>("");
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [name, setName] = useState<string>("Your Name");
+    const [student, setStudent] = useState<boolean>(true);
 
-    function gainAttempt() {
-        const parsed = parseInt(requestedAttempts);
-        if (!isNaN(parsed)) {
-            setLeftAttempts(leftAttempts + parsed);
-        }
+    function changeName(event: React.ChangeEvent<HTMLInputElement>) {
+        setName(event.target.value);
     }
-    function useAttempt() {
-        if (leftAttempts > 0) {
-            setLeftAttempts(leftAttempts - 1);
-        }
+    function switchEditMode() {
+        setEditMode(!editMode);
     }
-    function inputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setRequestedAttempts(event.target.value);
+    function switchStudent() {
+        setStudent(!student);
     }
     return (
         <div>
-            <h3>Edit Mode</h3>
-            <p>Attempts Left: {leftAttempts}</p>
-            <Form.Group controlId="formRequestedAttempts">
-                <Form.Label>Requested Attempts:</Form.Label>
-                <Form.Control
-                    type="number"
-                    value={requestedAttempts}
-                    onChange={inputChange}
-                    placeholder="Enter a number"
-                />
-            </Form.Group>
-            <Button onClick={gainAttempt}>Gain</Button>
-            <Button onClick={useAttempt} disabled={leftAttempts === 0}>
-                Use
-            </Button>
+            <Form.Check
+                type="switch"
+                id="edit-mode-switch"
+                label="Edit Mode"
+                checked={editMode}
+                onChange={switchEditMode}
+                className="form-switch"
+                //data-testid="edit-mode-switch"
+            />
+            {editMode ?
+                <div>
+                    <Form.Group controlId="formUserName">
+                        <Form.Label>Edit Name:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={name}
+                            onChange={changeName}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formStudentStatus">
+                        <Form.Check
+                            type="checkbox"
+                            id="student-checkbox"
+                            label="Student"
+                            checked={student}
+                            onChange={switchStudent}
+                        />
+                    </Form.Group>
+                </div>
+            :   <p>
+                    Your {name} is {student ? "a student" : "not a student"}.
+                </p>
+            }
         </div>
     );
 }

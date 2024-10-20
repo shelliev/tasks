@@ -7,9 +7,26 @@ export function MultipleChoiceQuestion({
     options: string[];
     expectedAnswer: string;
 }): React.JSX.Element {
+    const [currentChoice, setCurrentChoice] = useState<string>(options[0]);
+    const isCorrect = currentChoice === expectedAnswer;
+
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentChoice(event.target.value);
+    };
+
     return (
         <div>
             <h3>Multiple Choice Question</h3>
+            <h3>Multiple Choice Question</h3>
+            <label htmlFor="options">Choose an answer:</label>
+            <select id="options" value={currentChoice} onChange={handleChange}>
+                {options.map((option, index) => (
+                    <option key={index} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+            <div>{isCorrect ? "✔️" : "❌"}</div>
         </div>
     );
 }

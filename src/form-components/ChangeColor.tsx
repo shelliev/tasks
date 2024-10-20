@@ -33,7 +33,7 @@ export function ChangeColor(): React.JSX.Element {
                 />
             ))}
             <div
-                data-testid="colored-box" // Fixed the placement of data-testid
+                data-testid="colored-box"
                 style={{
                     width: "50%",
                     height: "50%",
